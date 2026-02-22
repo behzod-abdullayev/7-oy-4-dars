@@ -5,9 +5,6 @@ import { Auth } from "./module/auth/entities/auth.entity";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Article } from "./module/article/entities/article.entity";
 import { ArticleModule } from "./module/article/article.module";
-import { APP_GUARD } from "@nestjs/core";
-import { RolesGuard } from "./common/guard/roles.guard";
-import { AuthGuard } from "./common/guard/auth.guard";
 
 @Module({
   imports: [
@@ -28,15 +25,6 @@ import { AuthGuard } from "./common/guard/auth.guard";
     ArticleModule,
   ],
   controllers: [],
-  providers: [
-    {
-      provide: APP_GUARD,
-      useClass: AuthGuard,
-    },
-    {
-    provide: APP_GUARD,
-    useClass: RolesGuard,
-  },
-  ],
+  providers: [],
 })
 export class AppModule {}

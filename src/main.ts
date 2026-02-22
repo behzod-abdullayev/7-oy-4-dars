@@ -3,11 +3,13 @@ import { AppModule } from "./app.module";
 import { ValidationPipe } from "@nestjs/common";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import * as express from "express"
+import { AllExceptionFilter } from "./common/filter/all-exception.filter";
 
 
 async function bootstrap() {
   const PORT = process.env.PORT || 3000;
   const app = await NestFactory.create(AppModule);
+
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -17,21 +19,24 @@ async function bootstrap() {
     }),
   );
 
+  app.useGlobalFilters(new AllExceptionFilter())
+
   const condig = new DocumentBuilder()
     .setTitle("article project")
     .setDescription("article documentation")
-    .setVersion("1.0.0")
+    .setVersion("1.0")
     .addBearerAuth({
-      type:"http",
+      type: "http",
       scheme: "bearer",
-      name: "JWT",
-      description: "JWT token from header",
       bearerFormat: "JWT",
+      name: "JWT",
+      description: "enter JWT token",
       in: "header"
     },
-    "JWT_auth"
+
+    "JWT-auth"
   )
-    .build();
+  .build()
 
   const document = SwaggerModule.createDocument(app, condig);
 
