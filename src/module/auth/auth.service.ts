@@ -48,7 +48,7 @@ try {
     await this.authRepository.save(user);
     return {message: "registered"}
 } catch (error) {
-  throw new InternalServerErrorException(error.messaga)
+  throw new InternalServerErrorException(error.message)
 }
   }
 
@@ -71,14 +71,14 @@ try {
 
           await this.authRepository.update(foundUser.id, {otp: "", otpTime: 0})
 
-        const payload = {email: foundUser.email, role: foundUser.role}
+        const payload = {email: foundUser.email, roles: foundUser.role}
         const access_token = await this.jwtService.signAsync(payload)
 
         return {
           access_token
         }
       }catch (error) {
-        throw new InternalServerErrorException(error.messaga)
+        throw new InternalServerErrorException(error.message)
       }
   }
 

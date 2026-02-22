@@ -28,7 +28,9 @@ async function bootstrap() {
       description: "JWT token from header",
       bearerFormat: "JWT",
       in: "header"
-    })
+    },
+    "JWT_auth"
+  )
     .build();
 
   const document = SwaggerModule.createDocument(app, condig);
